@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منتجاتنا - متجر إياس للبخور العربية</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            direction: rtl;
+        }
+        header {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+        }
+        nav {
+            margin: 20px 0;
+        }
+        nav a {
+            margin: 0 15px;
+            color: white;
+            text-decoration: none;
+        }
+        section {
+            padding: 20px;
+            margin: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+        h2 {
+            color: #333;
+        }
+        .products {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .product {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+        }
+        .product img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: black;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .remove-btn {
+            background-color: #f44336; /* لون أحمر */
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>منتجاتنا</h1>
+    <nav>
+        <a href="الرئيسية.html">الرئيسية</a>
+    </nav>
+</header>
+
+<section id="products">
+    <h2>منتجات البخور</h2>
+    <div class="products">
+        <div class="product">
+            <img src="بخور عود.jpg" alt="بخور عود">
+            <h3>بخور عود</h3>
+            <p>سعر: 100 ريال</p>
+            <button onclick="addToCart('بخور عود', 100)">أضف إلى السلة</button>
+        </div>
+        <div class="product">
+            <img src="مسك.jpeg" alt="مسك">
+            <h3>مسك</h3>
+            <p>سعر: 80 ريال</p>
+            <button onclick="addToCart('مسك', 80)">أضف إلى السلة</button>
+        </div>
+        <div class="product">
+            <img src="لبان.jpg" alt="لبان">
+            <h3>لبان</h3>
+            <p>سعر: 70 ريال</p>
+            <button onclick="addToCart('لبان', 70)">أضف إلى السلة</button>
+        </div>
+        <div class="product">
+            <img src="بخور ورد.jpg" alt="بخور ورد">
+            <h3>بخور ورد</h3>
+            <p>سعر: 90 ريال</p>
+            <button onclick="addToCart('بخور ورد', 90)">أضف إلى السلة</button>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>سلة المشتريات</h2>
+    <ul id="cart"></ul>
+    <p id="total"></p>
+    <button onclick="checkout()">إتمام الشراء</button>
+</section>
+
+<footer>
+    <p>&copy; 2024 متجر إياس للبخور العربية. جميع الحقوق محفوظة.</p>
+</footer>
+
+<script>
+    let cart = [];
+    let totalAmount = 0;
+
+    function addToCart(product, price) {
+        cart.push({ product, price });
+        totalAmount += price;
+        updateCart();
+    }
+
+    function removeFromCart(index) {
+        totalAmount -= cart[index].price;
+        cart.splice(index, 1);
+        updateCart();
+    }
+
+    function updateCart() {
+        const cartList = document.getElementById('cart');
+        cartList.innerHTML = '';
+
+        cart.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.textContent = `${item.product} - ${item.price} ريال `;
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = 'حذف';
+            removeBtn.className = 'remove-btn';
+            removeBtn.onclick = () => removeFromCart(index);
+            li.appendChild(removeBtn);
+            cartList.appendChild(li);
+        });
+
+        document.getElementById('total').textContent = `المجموع: ${totalAmount} ريال`;
+    }
+
+    function checkout() {
+        if (cart.length === 0) {
+            alert('سلة المشتريات فارغة!');
+            return;
+        }
+        alert('تم إتمام الشراء بنجاح!');
+        // هنا يمكنك إضافة عملية إرسال البيانات إلى الخادم إذا كان لديك نظام معالجة الدفع
+        cart = [];
+        totalAmount = 0;
+        updateCart();
+    }
+</script>
+
+</body>
+</html>
